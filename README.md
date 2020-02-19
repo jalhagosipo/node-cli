@@ -39,3 +39,7 @@
     - `cli template html -d public/html -n new`
     - `cli copy` : 등록하지 않은 명령어를 사용하면 * 와일드카드 명령어가 실행됨
         - cli(기본)은 *에 해당안됨
+
+## v0.5
+- inquirer 사용
+    - action이 실행되었는지 검사하고 상호작용 시작!

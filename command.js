@@ -2,6 +2,7 @@
 const program = require('commander');
 const fs = require('fs');
 const path = require('path');
+const inquirer = require('inquirer');
 const chalk = require('chalk');
 
 const htmlTemplate = `<!DOCTYPE html>
@@ -57,6 +58,7 @@ const makeTemplate = (type, name, directory) => {
   if (type === 'html') {
     const pathToFile = path.join(directory, `${name}.html`);
     if (exist(pathToFile)) {
+        // 터미널에 색을 추가하는 chalk
       console.error(chalk.bold.red('이미 해당 파일이 존재합니다'));
     } else {
       fs.writeFileSync(pathToFile, htmlTemplate);
@@ -75,6 +77,7 @@ const makeTemplate = (type, name, directory) => {
   }
 };
 
+let triggered = false;
 // version : 프로그램의 버전 설정
 // 첫번째인자 : 버전, 두번째인자 : 버전을 보여줄 옵션, 여러개인 경우 ','로 구분
 // usage : 명령어의 사용법 설정
@@ -97,6 +100,7 @@ program
   .option('-d, --directory [path]', '생성 경로를 입력하세요', '.')
   .action((type, options) => {
     makeTemplate(type, options.name, options.directory);
+    triggered = true;
   });
 
 // *은 와일드카드. 나머지 모든명령어를 의미(template을 제외한 나머지)
@@ -113,3 +117,38 @@ program
 // process.argv를 받아서 명령어와 옵션을 파싱
 program
   .parse(process.argv);
+
+if (!triggered) {
+    // prompt : 인자로 질문목록을 받고, 프로미스를 통해 answer를 반환
+    // type : 질문의 종류 (list: 다중택일, input:평범한 답변, confirm:y/n)
+    // name : 질문의 이름. 
+    // message : 사용자에게 표시되는 문자열
+    // choices : type이 checkbox, list등인경우 선택지넣는곳
+    // default : 답을 적지 않았을 경우 적용되는 기본값
+  inquirer.prompt([{
+    type: 'list',
+    name: 'type',
+    message: '템플릿 종류를 선택하세요.',
+    choices: ['html', 'express-router'],
+  }, {
+    type: 'input',
+    name: 'name',
+    message: '파일의 이름을 입력하세요.',
+    default: 'index',
+  }, {
+    type: 'input',
+    name: 'directory',
+    message: '파일이 위치할 폴더의 경로를 입력하세요.',
+    default: '.',
+  }, {
+    type: 'confirm',
+    name: 'confirm',
+    message: '생성하시겠습니까?',
+  }])
+    .then((answers) => {
+      if (answers.confirm) {
+        makeTemplate(answers.type, answers.name, answers.directory);
+        console.log(chalk.rgb(128, 128, 128)('터미널을 종료합니다.'));
+      }
+    });
+}
