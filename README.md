@@ -23,3 +23,8 @@
 - 사용자로부터 입력 받기
 - 노드 내장 readline모듈을 통해 사용자로부터 입력을 받고, 그에 따른 결과를 출력
     - y 또는 n을 입력하고 그에따른 결과를 출력
+
+## v0.3
+- `cli html main ./public/html` -> /public/html에 main.html 만들기
+    - 순서 외우기 힘들다 -> 단계별로 질문하도록 만듬
+- cli 삭제 : `npm rm -g cli`
