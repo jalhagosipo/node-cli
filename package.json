@@ -9,6 +9,11 @@
   "author": "jalhagosipo",
   "license": "ISC",
   "bin": {
-    "cli": "./template.js"
+    "cli": "./command.js"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.1.1",
+    "inquirer": "^7.0.4"
   }
 }

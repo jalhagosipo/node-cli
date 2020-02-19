@@ -28,3 +28,14 @@
 - `cli html main ./public/html` -> /public/html에 main.html 만들기
     - 순서 외우기 힘들다 -> 단계별로 질문하도록 만듬
 - cli 삭제 : `npm rm -g cli`
+
+## v0.4
+- cli프로그램을 위한 라이브러리를 사용해서 만들기(`commander` 사용)
+- `npm i commander inquirer chalk`
+    - inquirer : cli프로그램과 사용자 간의 상호작용을 도움
+    - chalk : 콘솔 텍스트에 스타일 추가
+    - `cli -v`
+    - `cli -h`
+    - `cli template html -d public/html -n new`
+    - `cli copy` : 등록하지 않은 명령어를 사용하면 * 와일드카드 명령어가 실행됨
+        - cli(기본)은 *에 해당안됨
